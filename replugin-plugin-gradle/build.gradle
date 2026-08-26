@@ -1,0 +1,79 @@
+/*
+ * Copyright (C) 2005-2017 Qihoo 360 Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed To in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ *
+ */
+
+plugins {
+    id 'java-gradle-plugin'
+    id 'groovy'
+    id 'maven-publish'
+    id 'signing'
+    id 'com.vanniktech.maven.publish' version '0.37.0'
+}
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+String classPath = ".src.main.groovy.com.qihoo360.replugin.gradle.plugin.AppConstant".replace(".", java.io.File.separator)
+String verPath = "${project.projectDir}" + classPath + ".groovy"
+String verLine = new File(verPath).filterLine { it =~ /def static final VER =/ }
+version = "${verLine.split("\"")[1]}"
+java.lang.System.err.println "version=${version}"
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+sourceSets {
+    main {
+        groovy {
+            srcDirs '../replugin-host-gradle/src/main/groovy/com/qihoo360/replugin/gradle/compat'
+        }
+    }
+}
+
+dependencies {
+    compileOnly 'com.android.tools.build:gradle:9.2.0'
+    implementation 'org.javassist:javassist:3.32.0-GA'
+    implementation 'commons-io:commons-io:2.22.0'
+    implementation 'commons-codec:commons-codec:1.21.0'
+    implementation 'org.apache.groovy:groovy-xml:4.0.29'
+
+    implementation gradleApi()
+    implementation localGroovy()
+}
+
+gradlePlugin {
+    plugins {
+        pluginGradle {
+            id = 'replugin-plugin-gradle'
+            implementationClass = 'com.qihoo360.replugin.gradle.plugin.ReClassPlugin'
+        }
+        pluginGradleLegacy {
+            id = 'replugin.plugin.gradle'
+            implementationClass = 'com.qihoo360.replugin.gradle.plugin.ReClassPlugin'
+        }
+        pluginGradleCentral {
+            id = 'io.github.knifelfpro.replugin-plugin-gradle'
+            implementationClass = 'com.qihoo360.replugin.gradle.plugin.ReClassPlugin'
+        }
+    }
+}
+
+project.ext.RP_ARTIFACT_ID = 'replugin-plugin-gradle'
+apply from: '../rp-publish.gradle'

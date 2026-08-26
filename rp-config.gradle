@@ -1,0 +1,35 @@
+project.ext{
+	RP_USER = 'KnifelfPro'
+	RP_REPO = 'RePlugin'
+	RP_USERORG = 'KnifelfPro'
+	//
+	RP_SITE = 'https://github.com/KnifelfPro/RePlugin'
+	RP_DESC = 'OpenReplugin - A flexible, stable, easy-to-use Android Plug-in Framework'
+	RP_EMAIL = 'knifelfpro@gmail.com'
+	RP_GIT_URL = 'https://github.com/KnifelfPro/RePlugin'
+	RP_ISSUE_URL = 'https://github.com/KnifelfPro/RePlugin/issues'
+	RP_LICENSES_URL = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+	RP_LICENSES_NAME = 'Apache-2.0'
+	//
+	RP_GROUP = 'io.github.knifelfpro'
+	RP_VERSION = '3.2.0'
+	RP_COMPILE_SDK = 37
+	RP_MIN_SDK = 19
+	RP_TARGET_SDK = 37
+	RP_AGP_VERSION = '9.2.0'
+	RP_JAVA_VERSION = JavaVersion.VERSION_17
+	// AndroidX: 1.6.1 is the last appcompat that keeps minSdk 19.
+	// Compose / ComponentActivity samples can use 21+ with newer artifacts.
+	RP_ANDROIDX_APPCOMPAT = '1.6.1'
+	RP_ANDROIDX_ACTIVITY = '1.13.0'
+	RP_ANDROIDX_LBM = '1.1.0'
+	RP_ANDROIDX_MULTIDEX = '2.0.1'
+	RP_KOTLIN_VERSION = '2.2.10'
+	RP_COMPOSE_BOM = '2026.08.00'
+	RP_JAVASSIST = '3.32.0-GA'
+	RP_COMMONS_IO = '2.22.0'
+	RP_COMMONS_CODEC = '1.21.0'
+	RP_GROOVY_XML = '4.0.29'
+	RP_APK_PARSER = '2.6.10'
+	RP_HIDDENAPI_BYPASS = '6.1'
+}

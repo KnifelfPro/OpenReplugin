@@ -1,0 +1,62 @@
+/*
+ * Copyright (C) 2005-2017 Qihoo 360 Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed To in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+
+plugins {
+    id 'java-gradle-plugin'
+    id 'groovy'
+    id 'maven-publish'
+    id 'signing'
+    id 'com.vanniktech.maven.publish' version '0.37.0'
+}
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+    compileOnly 'com.android.tools.build:gradle:9.2.0'
+    implementation 'net.dongliu:apk-parser:2.6.10'
+    implementation 'org.apache.groovy:groovy-xml:4.0.29'
+
+    implementation gradleApi()
+    implementation localGroovy()
+}
+
+gradlePlugin {
+    plugins {
+        hostGradle {
+            id = 'replugin-host-gradle'
+            implementationClass = 'com.qihoo360.replugin.gradle.host.Replugin'
+        }
+        hostGradleFqcn {
+            id = 'com.qihoo360.replugin.replugin-host-gradle'
+            implementationClass = 'com.qihoo360.replugin.gradle.host.Replugin'
+        }
+        hostGradleCentral {
+            id = 'io.github.knifelfpro.replugin-host-gradle'
+            implementationClass = 'com.qihoo360.replugin.gradle.host.Replugin'
+        }
+    }
+}
+
+project.ext.RP_ARTIFACT_ID = 'replugin-host-gradle'
+apply from: '../rp-publish.gradle'

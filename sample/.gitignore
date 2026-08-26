@@ -1,0 +1,12 @@
+.gradle/
+.idea/
+.kotlin/
+.cxx/
+build/
+captures/
+local.properties
+*.iml
+.DS_Store
+
+# assembleSample copies plugin APKs here as {alias}.jar
+*/host/src/main/assets/plugins/*.jar

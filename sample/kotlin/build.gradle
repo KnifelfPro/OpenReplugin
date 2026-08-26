@@ -1,0 +1,18 @@
+plugins {
+    id 'com.android.application' version '9.2.0' apply false
+    id 'io.github.knifelfpro.replugin-host-gradle' version '3.2.0' apply false
+    id 'io.github.knifelfpro.replugin-plugin-gradle' version '3.2.0' apply false
+    id 'org.jetbrains.kotlin.android' version '2.2.10' apply false
+}
+
+tasks.register('assembleSample') {
+    group = 'sample'
+    description = 'Build plugin, copy into host assets, then build host'
+    dependsOn ':host:assembleDebug'
+}
+
+tasks.register('installSample') {
+    group = 'sample'
+    description = 'Build plugin + host and install host on a connected device'
+    dependsOn ':host:installDebug'
+}

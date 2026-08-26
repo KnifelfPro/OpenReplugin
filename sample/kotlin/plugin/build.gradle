@@ -1,0 +1,68 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'io.github.knifelfpro.replugin-plugin-gradle'
+}
+
+android {
+    namespace 'club.knifelf.kotlin.plugin'
+    compileSdk 37
+    defaultConfig {
+        applicationId "club.knifelf.kotlin.plugin"
+        minSdkVersion 19
+        targetSdkVersion 37
+        versionCode 1
+        versionName "1.0"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        buildConfig true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    lint {
+        abortOnError false
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+}
+
+repluginPluginConfig {
+    pluginName = "kotlin"
+    hostApplicationId = "club.knifelf.kotlin.host"
+    hostAppLauncherActivity = "club.knifelf.kotlin.host.MainActivity"
+}
+
+dependencies {
+    implementation 'io.github.knifelfpro:replugin-plugin-lib:3.2.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+}
+
+tasks.register('copyPluginToHost') {
+    group = 'sample'
+    description = 'Copy plugin debug APK into host assets/plugins as kotlin.jar'
+    dependsOn 'assembleDebug'
+    doLast {
+        def apk = fileTree(layout.buildDirectory.dir('outputs/apk/debug')).matching {
+            include '*.apk'
+            exclude '*unaligned*', '*unsigned*'
+        }.files.find { it.name.endsWith('.apk') }
+        if (apk == null || !apk.exists()) {
+            throw new GradleException('plugin debug apk not found')
+        }
+        def destDir = file("${rootProject.projectDir}/host/src/main/assets/plugins")
+        destDir.mkdirs()
+        def dest = new File(destDir, 'kotlin.jar')
+        dest.bytes = apk.bytes
+        println ">>> copied ${apk} -> ${dest}"
+    }
+}

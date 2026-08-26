@@ -1,0 +1,127 @@
+def static replaceVariables(File file, String key, String value) {
+    if (!file.exists()) return
+    def regex = '\\$\\{' + key + '\\}'
+    file.write((file.text =~ /${regex}/).replaceAll(value))
+}
+
+def getPropertySafe(name, defaultValue = '') {
+    if (hasProperty(name) && getProperty(name).toString().trim() != '') return getProperty(name)
+    return defaultValue
+}
+
+def getPropertyExt(name, defaultValue = '') {
+    if (project.ext.has(name) && project.ext[name] != null) return project.ext[name]
+    return getPropertySafe(name, defaultValue)
+}
+
+def pbUpdateVariables() {
+    [
+        "src/main/groovy/com/qihoo360/replugin/gradle/host/AppConstant.groovy",
+        "src/main/groovy/com/qihoo360/replugin/gradle/plugin/AppConstant.groovy"
+    ].forEach { replaceVariables(project.file(it), "RP_VERSION", version) }
+}
+
+apply from: "${buildscript.sourceFile.parent}/rp-config.gradle"
+
+group = getPropertyExt('RP_GROUP')
+version = getPropertyExt('RP_VERSION')
+
+def pbArtifactId = getPropertyExt('RP_ARTIFACT_ID')
+def pbUser = getPropertyExt('RP_USER')
+def pbEmail = getPropertyExt('RP_EMAIL', pbUser)
+def pbDesc = getPropertyExt('RP_DESC')
+def pbLicense = getPropertyExt('RP_LICENSES_NAME')
+def pbLicenseUrl = getPropertyExt('RP_LICENSES_URL')
+def pbSiteUrl = getPropertyExt('RP_SITE')
+def pbGitUrl = getPropertyExt('RP_GIT_URL', pbSiteUrl)
+
+pbUpdateVariables()
+
+if (!pluginManager.hasPlugin('com.vanniktech.maven.publish')) {
+    throw new GradleException("Apply plugin 'com.vanniktech.maven.publish' before rp-publish.gradle")
+}
+pluginManager.apply('signing')
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8"
+}
+// AGP sources jar includes both handwritten Java and AIDL stubs with the same path.
+gradle.projectsEvaluated {
+    def sourceJar = tasks.findByName('sourceReleaseJar')
+    if (sourceJar != null) {
+        sourceJar.duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        sourceJar.eachFile { details ->
+            if (details.file.absolutePath.contains('aidl_source_output_dir')) {
+                details.exclude()
+            }
+        }
+    }
+}
+tasks.withType(Javadoc).configureEach {
+    failOnError = false
+    options.encoding = "UTF-8"
+}
+
+// GPG 2.4+ / keyboxd keys are not readable by Gradle's BouncyCastle secring signer.
+signing {
+    useGpgCmd()
+}
+
+mavenPublishing {
+    publishToMavenCentral()
+    signAllPublications()
+    coordinates(group.toString(), pbArtifactId, version.toString())
+
+    pom {
+        name = pbArtifactId
+        description = pbDesc
+        inceptionYear = "2017"
+        url = pbSiteUrl
+        licenses {
+            license {
+                name = pbLicense
+                url = pbLicenseUrl
+                distribution = "repo"
+            }
+        }
+        developers {
+            developer {
+                id = pbUser
+                name = pbUser
+                email = pbEmail
+                url = "https://github.com/${pbUser}/"
+            }
+        }
+        scm {
+            url = pbGitUrl
+            connection = "scm:git:git://github.com/${pbUser}/RePlugin.git"
+            developerConnection = "scm:git:ssh://git@github.com/${pbUser}/RePlugin.git"
+        }
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            name = 'LocalMaven'
+            url = uri(new File(System.getProperty('user.home'), '.m2/repository'))
+        }
+    }
+}
+
+// Plugin markers inherit groupId from the plugin id. Central only accepts
+// coordinates under the verified namespace (RP_GROUP and its subgroups).
+tasks.withType(org.gradle.api.publish.maven.tasks.PublishToMavenRepository).configureEach { task ->
+    task.onlyIf {
+        if (task.repository?.name != 'mavenCentral') {
+            return true
+        }
+        def pub = task.publication
+        if (!(pub instanceof MavenPublication) || !pub.groupId) {
+            return true
+        }
+        return pub.groupId.startsWith(project.group.toString())
+    }
+}
+
+println(">>> publish ${group}:${pbArtifactId}:${version}")

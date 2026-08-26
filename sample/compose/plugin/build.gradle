@@ -1,0 +1,74 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.compose'
+    id 'io.github.knifelfpro.replugin-plugin-gradle'
+}
+
+android {
+    namespace 'club.knifelf.compose.plugin'
+    compileSdk 37
+    defaultConfig {
+        applicationId "club.knifelf.compose.plugin"
+        minSdkVersion 23
+        targetSdkVersion 37
+        versionCode 1
+        versionName "1.0"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        buildConfig true
+        compose true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    lint {
+        abortOnError false
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+}
+
+repluginPluginConfig {
+    pluginName = "compose"
+    hostApplicationId = "club.knifelf.compose.host"
+    hostAppLauncherActivity = "club.knifelf.compose.host.MainActivity"
+}
+
+dependencies {
+    implementation 'io.github.knifelfpro:replugin-plugin-lib:3.2.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.activity:activity-compose:1.13.0'
+    implementation platform('androidx.compose:compose-bom:2026.08.00')
+    implementation 'androidx.compose.ui:ui'
+    implementation 'androidx.compose.material3:material3'
+}
+
+tasks.register('copyPluginToHost') {
+    group = 'sample'
+    description = 'Copy plugin debug APK into host assets/plugins as compose.jar'
+    dependsOn 'assembleDebug'
+    doLast {
+        def apk = fileTree(layout.buildDirectory.dir('outputs/apk/debug')).matching {
+            include '*.apk'
+            exclude '*unaligned*', '*unsigned*'
+        }.files.find { it.name.endsWith('.apk') }
+        if (apk == null || !apk.exists()) {
+            throw new GradleException('plugin debug apk not found')
+        }
+        def destDir = file("${rootProject.projectDir}/host/src/main/assets/plugins")
+        destDir.mkdirs()
+        def dest = new File(destDir, 'compose.jar')
+        dest.bytes = apk.bytes
+        println ">>> copied ${apk} -> ${dest}"
+    }
+}

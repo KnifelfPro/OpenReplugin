@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OpenReplugin Compose Plugin</string>
+    <string name="plugin_status">COMPOSE PLUGIN OK</string>
+    <string name="plugin_hint">Loaded from builtin plugin compose.jar</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OpenReplugin AndroidX Plugin</string>
+    <string name="plugin_status">ANDROIDX PLUGIN OK</string>
+    <string name="plugin_hint">Loaded from builtin plugin androidx.jar</string>
+</resources>

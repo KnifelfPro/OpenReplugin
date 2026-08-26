@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OpenReplugin Kotlin Plugin</string>
+    <string name="plugin_status">KOTLIN PLUGIN OK</string>
+    <string name="plugin_hint">Loaded from builtin plugin kotlin.jar</string>
+</resources>
