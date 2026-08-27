@@ -4,11 +4,11 @@
 
 [![license](http://img.shields.io/badge/license-Apache2.0-brightgreen.svg?style=flat)](./LICENSE)
 
-[![Release Version](https://img.shields.io/badge/release-3.2.0-brightgreen.svg)](https://github.com/KnifelfPro/RePlugin/releases)
+[![Release Version](https://img.shields.io/badge/release-3.3.0-brightgreen.svg)](https://github.com/KnifelfPro/RePlugin/releases)
 
 ## 使用文档
 
-**3.2.0** 已发布到 Maven Central，坐标为 `io.github.knifelfpro`。完整接入步骤见 **[docs/使用文档.md](./docs/使用文档.md)**。
+**3.3.0** 已发布到 Maven Central，坐标为 `io.github.knifelfpro`。完整接入步骤见 **[docs/使用文档.md](./docs/使用文档.md)**。
 
 ```gradle
 pluginManagement {
@@ -16,22 +16,22 @@ pluginManagement {
 }
 
 plugins {
-    id 'io.github.knifelfpro.replugin-host-gradle' version '3.2.0' apply false
-    id 'io.github.knifelfpro.replugin-plugin-gradle' version '3.2.0' apply false
+    id 'io.github.knifelfpro.replugin-host-gradle' version '3.3.0' apply false
+    id 'io.github.knifelfpro.replugin-plugin-gradle' version '3.3.0' apply false
 }
 
 dependencies {
-    implementation 'io.github.knifelfpro:replugin-host-lib:3.2.0'    // host
-    implementation 'io.github.knifelfpro:replugin-plugin-lib:3.2.0'  // plugin
+    implementation 'io.github.knifelfpro:replugin-host-lib:3.3.0'    // host
+    implementation 'io.github.knifelfpro:replugin-plugin-lib:3.3.0'  // plugin
 }
 ```
 
 | 用途 | 坐标 | Gradle Plugin ID |
 |---|---|---|
-| 宿主 Gradle 插件 | `io.github.knifelfpro:replugin-host-gradle:3.2.0` | `io.github.knifelfpro.replugin-host-gradle` |
-| 宿主 Library | `io.github.knifelfpro:replugin-host-lib:3.2.0` | — |
-| 插件 Gradle 插件 | `io.github.knifelfpro:replugin-plugin-gradle:3.2.0` | `io.github.knifelfpro.replugin-plugin-gradle` |
-| 插件 Library | `io.github.knifelfpro:replugin-plugin-lib:3.2.0` | — |
+| 宿主 Gradle 插件 | `io.github.knifelfpro:replugin-host-gradle:3.3.0` | `io.github.knifelfpro.replugin-host-gradle` |
+| 宿主 Library | `io.github.knifelfpro:replugin-host-lib:3.3.0` | — |
+| 插件 Gradle 插件 | `io.github.knifelfpro:replugin-plugin-gradle:3.3.0` | `io.github.knifelfpro.replugin-plugin-gradle` |
+| 插件 Library | `io.github.knifelfpro:replugin-plugin-lib:3.3.0` | — |
 
 ## OpenReplugin —— A flexible, stable, easy-to-use Android Plug-in Framework
 
@@ -70,7 +70,7 @@ Make OpenReplugin be used in all kinds of ordinary Apps; and provide stable, fle
 
 ## Latest features
 
-**3.2.0** targets API 19–37 (Android 4.4 through Android 17), lets host and plugin app code use Java 17, and builds with Gradle 9 / Android Gradle Plugin 9. This release adds Jetpack Compose plugins, forwards plugin Application lifecycle, isolates plugin storage, and hardens install paths and static Receiver registration.
+**3.3.0** targets API 19–37 (Android 4.4 through Android 17), lets host and plugin app code use Java 8 or Java 17, and builds with Gradle 9 / Android Gradle Plugin 9. This release adds Jetpack Compose plugins, forwards plugin Application lifecycle, isolates plugin storage, and hardens install paths and static Receiver registration.
 
 ## OpenReplugin Architecture
 

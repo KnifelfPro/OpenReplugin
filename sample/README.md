@@ -1,7 +1,7 @@
 # OpenReplugin samples
 
 Each folder is one Gradle project with two applications (`:host` and `:plugin`).
-Dependencies come from Maven Central / Google (`io.github.knifelfpro:3.2.0`).
+Dependencies come from Maven Central / Google (`io.github.knifelfpro:3.3.0`).
 
 | Folder | Stack | Host / plugin id |
 |---|---|---|

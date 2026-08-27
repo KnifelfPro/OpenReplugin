@@ -38,7 +38,7 @@ repluginPluginConfig {
 }
 
 dependencies {
-    implementation 'io.github.knifelfpro:replugin-plugin-lib:3.2.0'
+    implementation 'io.github.knifelfpro:replugin-plugin-lib:3.3.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.facebook.fresco:fresco:3.6.0'
 }

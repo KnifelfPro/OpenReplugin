@@ -4,7 +4,7 @@
 
 [![license](http://img.shields.io/badge/license-Apache2.0-brightgreen.svg?style=flat)](./LICENSE)
 
-[![Release Version](https://img.shields.io/badge/release-3.2.0-brightgreen.svg)](https://github.com/KnifelfPro/RePlugin/releases)
+[![Release Version](https://img.shields.io/badge/release-3.3.0-brightgreen.svg)](https://github.com/KnifelfPro/RePlugin/releases)
 
 ## OpenReplugin —— 历经多年考验、数亿设备使用的稳定占坑类插件化方案
 
@@ -42,7 +42,7 @@ OpenReplugin 基于原 RePlugin 持续维护，是一套完整的、稳定的、
 
 ## 最新特性
 
-**3.2.0** 已发布到 Maven Central。支持 API 19–37（Android 4.4 至 Android 17），宿主与插件应用代码可用 Java 17，构建工具为 Gradle 9 / Android Gradle Plugin 9。本版增加 Jetpack Compose 插件、转发插件 Application 生命周期、隔离插件存储，并加固安装路径和静态 Receiver 注册。
+**3.3.0** 已发布到 Maven Central。支持 API 19–37（Android 4.4 至 Android 17），宿主与插件应用代码可用 Java 8 或 Java 17，构建工具为 Gradle 9 / Android Gradle Plugin 9。本版增加 Jetpack Compose 插件、转发插件 Application 生命周期、隔离插件存储，并加固安装路径和静态 Receiver 注册。
 
 ## OpenReplugin 架构图
 
@@ -58,7 +58,7 @@ OpenReplugin 基于原 RePlugin 持续维护，是一套完整的、稳定的、
 
 ## 使用方法
 
-当前版本 **3.2.0** 已发布到 Maven Central（坐标 `io.github.knifelfpro`）。接入步骤、宿主/插件配置和常用 API 见 **[docs/使用文档.md](./docs/使用文档.md)**。
+当前版本 **3.3.0** 已发布到 Maven Central（坐标 `io.github.knifelfpro`）。接入步骤、宿主/插件配置和常用 API 见 **[docs/使用文档.md](./docs/使用文档.md)**。
 
 ```gradle
 pluginManagement {
@@ -66,22 +66,22 @@ pluginManagement {
 }
 
 plugins {
-    id 'io.github.knifelfpro.replugin-host-gradle' version '3.2.0' apply false
-    id 'io.github.knifelfpro.replugin-plugin-gradle' version '3.2.0' apply false
+    id 'io.github.knifelfpro.replugin-host-gradle' version '3.3.0' apply false
+    id 'io.github.knifelfpro.replugin-plugin-gradle' version '3.3.0' apply false
 }
 
 dependencies {
-    implementation 'io.github.knifelfpro:replugin-host-lib:3.2.0'    // 宿主
-    implementation 'io.github.knifelfpro:replugin-plugin-lib:3.2.0'  // 插件
+    implementation 'io.github.knifelfpro:replugin-host-lib:3.3.0'    // 宿主
+    implementation 'io.github.knifelfpro:replugin-plugin-lib:3.3.0'  // 插件
 }
 ```
 
 | 用途 | 坐标 | Gradle Plugin ID |
 |---|---|---|
-| 宿主 Gradle 插件 | `io.github.knifelfpro:replugin-host-gradle:3.2.0` | `io.github.knifelfpro.replugin-host-gradle` |
-| 宿主 Library | `io.github.knifelfpro:replugin-host-lib:3.2.0` | — |
-| 插件 Gradle 插件 | `io.github.knifelfpro:replugin-plugin-gradle:3.2.0` | `io.github.knifelfpro.replugin-plugin-gradle` |
-| 插件 Library | `io.github.knifelfpro:replugin-plugin-lib:3.2.0` | — |
+| 宿主 Gradle 插件 | `io.github.knifelfpro:replugin-host-gradle:3.3.0` | `io.github.knifelfpro.replugin-host-gradle` |
+| 宿主 Library | `io.github.knifelfpro:replugin-host-lib:3.3.0` | — |
+| 插件 Gradle 插件 | `io.github.knifelfpro:replugin-plugin-gradle:3.3.0` | `io.github.knifelfpro.replugin-plugin-gradle` |
+| 插件 Library | `io.github.knifelfpro:replugin-plugin-lib:3.3.0` | — |
 
 大部分情况下和“单品”开发无异，也可直接参考 [sample](./sample) 示例工程。
 

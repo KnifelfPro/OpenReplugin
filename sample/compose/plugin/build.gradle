@@ -45,7 +45,7 @@ repluginPluginConfig {
 }
 
 dependencies {
-    implementation 'io.github.knifelfpro:replugin-plugin-lib:3.2.0'
+    implementation 'io.github.knifelfpro:replugin-plugin-lib:3.3.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.activity:activity-compose:1.13.0'
     implementation platform('androidx.compose:compose-bom:2026.08.00')
